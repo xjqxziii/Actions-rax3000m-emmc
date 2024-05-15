@@ -123,6 +123,8 @@ jobs:
       run: |
         cd openwrt
         chmod +x $GITHUB_WORKSPACE/$CLASH_CORE && $GITHUB_WORKSPACE/$CLASH_CORE
+        mkdir -p files/etc/config
+        cp $GITHUB_WORKSPACE/scripts/nginx files/etc/config/nginx
         make defconfig
         make download -j8 V=10
         find dl -size -1024c -exec ls -l {} \;
@@ -189,7 +191,7 @@ jobs:
         fi
         max_frequency=$(($(grep -oP "max-frequency = <\K[0-9]*" openwrt/target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7981-cmcc-rax3000m-emmc.dts) / 1000000))
         echo "- 使用闪存频率: ${max_frequency}MHz" >> release.txt
-        release_tag=$(date +"%Y.%m.%d-mt7981-cmcc_rax3000m-emmc-${wlan_luci_interface}-${eeprom_status}-${max_frequency}MHz")
+        release_tag=$(date +"%Y.%m.%d.%H-mt7981-cmcc_rax3000m-emmc-${wlan_luci_interface}-${eeprom_status}-${max_frequency}MHz")
         echo "release_tag=${release_tag}" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
 
