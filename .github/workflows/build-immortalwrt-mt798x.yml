@@ -122,7 +122,6 @@ jobs:
     - name: 下载文件
       run: |
         cd openwrt
-        chmod +x $GITHUB_WORKSPACE/$CLASH_CORE && $GITHUB_WORKSPACE/$CLASH_CORE
         mkdir -p files/etc/config
         cp $GITHUB_WORKSPACE/scripts/nginx files/etc/config/nginx
         make defconfig
